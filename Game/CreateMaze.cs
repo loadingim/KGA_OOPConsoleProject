@@ -5,41 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using endTrpg.Scenes;
+using endTrpg.Move;
 namespace endTrpg.Game
 {
-    public class CreateMaze
+    public struct Point
     {
-        GameData data = new GameData();
-
-
-        public void SetData()
+        public int x;
+        public int y;
+    }
+    public class CreateMaze : GameData
+    {
+        
+        public void SetData()  
         {
-            data.map = new bool[,]
-          {
-                { false, false, false, false, false, false, false },
-                { false,  true, true,  true,  true,  true, false },
-                { false,  true, true,  true,  true,  true, false },
-                { false,  true, true,  true,  true,  true, false },
-                { false,  true, true,  true,  true,  true, false },
-                { false,  true, true,  true,  true,  true, false },
-                { false, false, false, false, false, false, false },
-          };
 
-            data.playerPos = new Point() { x = 1, y = 1 };
-            data.BoxPos1 = new Point() { x = 5, y = 1 };
-            data.BoxPos2 = new Point() { x = 5, y = 3 };
-            data.BoxPos3 = new Point() { x = 5, y = 5 };
-            data.BoxPos4 = new Point() { x = 1, y = 5 };
-            data.playerPos = new Point() { x = 1, y = 1 };
+         
+
         }
         public void PrintMap()
         {
-            for (int y = 0; y < data.map.GetLength(0); y++)
+            for (int y = 0; y < map.GetLength(0); y++)
             {
-                for (int x = 0; x < data.map.GetLength(1); x++)
-                 {
-                    if (data.map[y, x])
+                for (int x = 0; x < map.GetLength(1); x++)
+                {
+                    if (map[y, x])
                     {
                         Console.Write(" ");
                     }
@@ -50,10 +40,11 @@ namespace endTrpg.Game
                 }
                 Console.WriteLine();
             }
+            player.ShowInfo();
         }
         public void PrintPlayer()
         {
-            Console.SetCursorPosition(data.playerPos.x, data.playerPos.y);
+            Console.SetCursorPosition(playerPos.x, playerPos.y);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("P");
             Console.ResetColor();
@@ -61,28 +52,28 @@ namespace endTrpg.Game
 
         public void PrintBox1()
         {
-            Console.SetCursorPosition(data.BoxPos1.x, data.BoxPos1.y);
+            Console.SetCursorPosition(BoxPos1.x, BoxPos1.y);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("H");
             Console.ResetColor();
         }
         public void PrintBox2()
         {
-            Console.SetCursorPosition(data.BoxPos2.x, data.BoxPos2.y);
+            Console.SetCursorPosition(BoxPos2.x, BoxPos2.y);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("B");
             Console.ResetColor();
         }
         public void PrintBox3()
         {
-            Console.SetCursorPosition(data.BoxPos3.x, data.BoxPos3.y);
+            Console.SetCursorPosition(BoxPos3.x, BoxPos3.y);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("F");
             Console.ResetColor();
         }
         public void PrintBox4()
         {
-            Console.SetCursorPosition(data.BoxPos4.x, data.BoxPos4.y);
+            Console.SetCursorPosition(BoxPos4.x, BoxPos4.y);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("S");
             Console.ResetColor();

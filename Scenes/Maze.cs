@@ -6,17 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using endTrpg.Move;
 namespace endTrpg.Scenes
 {
     public class Maze : Scene
     {
         CreateMaze maze = new CreateMaze();
-        GameData data;
-        PlayerInfo player = new PlayerInfo();
+        PlayerMove pMove;
         bool mazeRunning = true;
 
-       
+
 
         public Maze(GameData game) : base(game)
         {
@@ -34,20 +33,21 @@ namespace endTrpg.Scenes
 
         public override void Input()
         {
+            maze.inputKey = Console.ReadKey(true).Key;
         }
 
         public override void Render()
         {
 
             maze.SetData();
-            
+
             while (mazeRunning)
             {
                 RenderMaze();
                 Input();
                 Update();
             }
-            
+
         }
 
         public void RenderMaze()
@@ -63,12 +63,32 @@ namespace endTrpg.Scenes
 
             Console.WriteLine();
             Console.WriteLine();
-            player.ShowInfo();
+            game.player.ShowInfo();
         }
 
         public override void Update()
         {
 
+                switch (maze.inputKey)
+                {
+                    case ConsoleKey.W:
+                    case ConsoleKey.UpArrow:
+                        pMove.MoveUp();
+                        break;
+                    case ConsoleKey.S:
+                    case ConsoleKey.DownArrow:
+                        pMove.MoveDown();
+                        break;
+                    case ConsoleKey.A:
+                    case ConsoleKey.LeftArrow:
+                        pMove.MoveLeft();
+                        break;
+                    case ConsoleKey.D:
+                    case ConsoleKey.RightArrow:
+                        pMove.MoveRight();
+                        break;
+                }
+            }
         }
     }
-}
+

@@ -10,10 +10,11 @@ namespace endTrpg
 {
     public class Program
     {
+        public static GameData game;
         static void Main(string[] args) 
-        { 
-        GameData game = new GameData();
-        game.Run();
+        {
+            game = new GameData();
+            game.Run();
         }
     }
 }
