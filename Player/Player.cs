@@ -1,5 +1,6 @@
 ﻿using endTrpg.Game;
 using endTrpg.Item;
+using endTrpg.Monsters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace endTrpg.Player
         public string Weapon;
         public string Armor;
         public string Expendables;
-        
+
 
         public void ShowInfo()
         {
@@ -43,12 +44,7 @@ namespace endTrpg.Player
             Console.WriteLine("=====================================");
             Console.WriteLine();
             Console.WriteLine();
-            Console.SetCursorPosition(0, 0);
-        }
-
-        static void PrintProfile()
-        {
-            
+            Console.SetCursorPosition(0, 5);
         }
     }
 }

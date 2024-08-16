@@ -10,6 +10,8 @@ namespace endTrpg.Scenes
     public abstract class Scene
     {
         protected bool loop = true;
+
+        protected string sceneState;
         public static void Wait(float seconds)
         {
             Thread.Sleep((int)(seconds * 1000));

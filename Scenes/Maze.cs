@@ -11,19 +11,22 @@ namespace endTrpg.Scenes
 {
     public class Maze : Scene
     {
-        CreateMaze maze = new CreateMaze();
+        CreateMaze maze;
         PlayerMove pMove;
-        bool mazeRunning = true;
 
 
 
         public Maze(GameData game) : base(game)
         {
-
+            maze = new CreateMaze(game);
+            pMove = new PlayerMove(game);
         }
+
+
         public override void Enter()
         {
-
+            game.playerPos = new Point() { x = 1, y = 1 };
+            game.map = game.townMap;
         }
 
         public override void Exit()
@@ -33,24 +36,10 @@ namespace endTrpg.Scenes
 
         public override void Input()
         {
-            maze.inputKey = Console.ReadKey(true).Key;
+            game.inputKey = Console.ReadKey(true).Key;
         }
 
         public override void Render()
-        {
-
-            maze.SetData();
-
-            while (mazeRunning)
-            {
-                RenderMaze();
-                Input();
-                Update();
-            }
-
-        }
-
-        public void RenderMaze()
         {
             Console.Clear();
 
@@ -59,36 +48,40 @@ namespace endTrpg.Scenes
             maze.PrintBox1();
             maze.PrintBox2();
             maze.PrintBox3();
-            maze.PrintBox4();
 
             Console.WriteLine();
             Console.WriteLine();
             game.player.ShowInfo();
+
         }
 
         public override void Update()
         {
 
-                switch (maze.inputKey)
-                {
-                    case ConsoleKey.W:
-                    case ConsoleKey.UpArrow:
-                        pMove.MoveUp();
-                        break;
-                    case ConsoleKey.S:
-                    case ConsoleKey.DownArrow:
-                        pMove.MoveDown();
-                        break;
-                    case ConsoleKey.A:
-                    case ConsoleKey.LeftArrow:
-                        pMove.MoveLeft();
-                        break;
-                    case ConsoleKey.D:
-                    case ConsoleKey.RightArrow:
-                        pMove.MoveRight();
-                        break;
-                }
+            switch (game.inputKey)
+            {
+                case ConsoleKey.W:
+                case ConsoleKey.UpArrow:
+                    pMove.MoveUp();
+                    break;
+                case ConsoleKey.S:
+                case ConsoleKey.DownArrow:
+                    pMove.MoveDown();
+                    break;
+                case ConsoleKey.A:
+                case ConsoleKey.LeftArrow:
+                    pMove.MoveLeft();
+                    break;
+                case ConsoleKey.D:
+                case ConsoleKey.RightArrow:
+                    pMove.MoveRight();
+                    break;
+                case ConsoleKey.B:
+                    pMove.MoveRight();
+                    break;
             }
+            maze.CheckGameClear();
         }
     }
+}
 
