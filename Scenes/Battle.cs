@@ -13,9 +13,7 @@ namespace endTrpg.Scenes
 {
     public class Battle : Scene
     {
-        PlayerInfo player;
         Random rand = new Random();
-        private MonsterBuilder monster;
         Monster mob = new Monster();
         MonsterBuilder mongsil = new MonsterBuilder();
         MonsterBuilder slime = new MonsterBuilder();
@@ -174,7 +172,7 @@ namespace endTrpg.Scenes
 
                 else if (choice == 2)
                 {
-
+                    //game.Mage.Skill();
                     Console.ReadKey();
                 }
             }
