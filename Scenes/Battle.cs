@@ -8,6 +8,7 @@ using endTrpg.Game;
 using System.Drawing;
 using System.Xml.Linq;
 using endTrpg.Player;
+using endTrpg.Item;
 
 namespace endTrpg.Scenes
 {
@@ -18,6 +19,8 @@ namespace endTrpg.Scenes
         MonsterBuilder mongsil = new MonsterBuilder();
         MonsterBuilder slime = new MonsterBuilder();
         MonsterBuilder arcticfox = new MonsterBuilder();
+        MonsterBuilder sam = new MonsterBuilder();
+        MonsterBuilder isaac = new MonsterBuilder();
         int choice;
 
         public Battle(GameData game) : base(game)
@@ -51,7 +54,7 @@ namespace endTrpg.Scenes
             slime.SetAttackRange("1칸");
             slime.SetAttackStyle("몸통박치기");
 
-            
+
             arcticfox.SetName("북극 여우");
             arcticfox.SetExp(10);
             arcticfox.SetApp("연 푸른 냉기를 내뿜는 여우");
@@ -61,9 +64,26 @@ namespace endTrpg.Scenes
             arcticfox.SetAttackRange("2X2칸");
             arcticfox.SetAttackStyle("냉기안개");
 
-            
+            sam.SetName("지나가던 산적의 삼촌");
+            sam.SetExp(5);
+            sam.SetApp("따뜻한 인상의 삼촌이다.");
+            sam.SetHp(100);
+            sam.SetAttack(20);
+            sam.SetLoot("조카 줄 고기");
+            sam.SetAttackRange("1x1칸");
+            sam.SetAttackStyle("인자한 웃음");
 
-            switch (rand.Next(1, 4))
+            isaac.SetName("아이작");
+            isaac.SetExp(15);
+            isaac.SetApp("길을 잃은 괴물의 아이");
+            isaac.SetHp(3);
+            isaac.SetAttack((int)3.5);
+            isaac.SetLoot("아이작의 눈물");
+            isaac.SetAttackRange("23.75칸");
+            isaac.SetAttackStyle("알 수 없음");
+
+
+            switch (rand.Next(1, 6))
             {
                 case 1:
                     mob = mongsil.Build();
@@ -73,6 +93,12 @@ namespace endTrpg.Scenes
                     break;
                 case 3:
                     mob = arcticfox.Build();
+                    break;
+                case 4:
+                    mob = sam.Build();
+                    break;
+                case 5:
+                    mob = isaac.Build();
                     break;
                 default:
                     break;
@@ -113,12 +139,14 @@ namespace endTrpg.Scenes
                 Console.WriteLine($"몬스터 : {mob.name,-6}");
                 Console.WriteLine($"체력 : {mob.hp,+3} / {mob.maxHp}");
                 Console.WriteLine("=============================================");
-                game.player.ShowInfo();
-
-                
                 Console.WriteLine("1. 기본공격");
                 Console.WriteLine("2. 스킬");
                 Console.WriteLine("3. 도망");
+
+                game.player.ShowInfo();
+
+                
+
 
 
                 
@@ -137,7 +165,7 @@ namespace endTrpg.Scenes
                 }
                 else
                 {
-                    switch (rand.Next(1, 4))
+                    switch (rand.Next(1, 6))
                     {
                         case 1:
                             mob = mongsil.Build();
@@ -148,9 +176,16 @@ namespace endTrpg.Scenes
                         case 3:
                             mob = arcticfox.Build();
                             break;
+                        case 4:
+                            mob = sam.Build();
+                            break;
+                        case 5:
+                            mob = isaac.Build();
+                            break;
                         default:
                             break;
                     }
+
                     game.ReturnScenes();
                     game.playerPos = game.backPlayerPos;
                 }
@@ -172,17 +207,28 @@ namespace endTrpg.Scenes
 
                 else if (choice == 2)
                 {
-                    //game.Mage.Skill();
-                    Console.ReadKey();
+
+                    Console.WriteLine($"{game.player.name}은(는) 스킬 공격을 하였다.");
+                    game.player.Skill(mob);
+                    Console.WriteLine($"{mob.name}은(는) {mob.maxHp - mob.hp}의 데미지를 입었다.");
+
+                    Console.WriteLine($"{mob.name}은(는) 반격을 하였다.");
+                    Console.WriteLine($"{game.player.name}은(는) {mob.attack}만큼의 데미지를 입었다.");
+                    game.player.curHP = game.player.curHP - mob.attack;
+                    Wait(1);
+                    Console.Clear();
+                    
                 }
             }
             if (mob.hp <= 0)
             {
                 Console.WriteLine($"{mob.name}을(를) 쓰러트렸습니다!!");
-
+                game.inven.Add(mob);
                 Wait(1);
                 game.ReturnScenes();
                 game.playerPos = game.backPlayerPos;
+
+                game.player.killCount++;
             }
             if (game.player.curHP <= 0)
             {

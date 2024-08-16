@@ -28,8 +28,12 @@ namespace endTrpg.Player
         public string Weapon;
         public string Armor;
         public string Expendables;
+        public int killCount;
 
+        public virtual void Skill(Monster monster)
+        {
 
+        }
         public void ShowInfo()
         {
             Console.SetCursorPosition(0, 20);
@@ -44,7 +48,7 @@ namespace endTrpg.Player
             Console.WriteLine("=====================================");
             Console.WriteLine();
             Console.WriteLine();
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, 7);
         }
     }
 }

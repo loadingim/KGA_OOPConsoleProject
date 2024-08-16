@@ -21,6 +21,7 @@ namespace endTrpg.Game
     {
         GameData game;
         Random rand = new Random();
+        int choice;
 
         public CreateMaze(GameData game)
         {
@@ -147,6 +148,7 @@ namespace endTrpg.Game
 
         public void CheckGameClear()
         {
+            
             if (game.playerPos.x == game.BoxPos1.x &&
                 game.playerPos.y == game.BoxPos1.y)
             {
@@ -171,8 +173,8 @@ namespace endTrpg.Game
                     Console.WriteLine("=============================================");
                     Console.WriteLine("1. 알겠습니다.");
                     Console.WriteLine("2. 제가 지금 시간이 없어서 죄송합니다.");
-                    int.TryParse(Console.ReadLine(), out int choice);
-
+                    int.TryParse(Console.ReadLine(), out choice);
+                    Console.Clear();
                     if (choice == 1)
                     {
                         Console.WriteLine("촌장 : 고맙네");
@@ -182,6 +184,7 @@ namespace endTrpg.Game
                         Console.WriteLine("촌장 : 그 몬스터들 때문에 요즘 행상인들이 오지를 못해 곤란하다네 그리하여 자네가 그것을 좀 처리해주었으면하네");
                         Scene.Wait(0.2f);
                         Console.WriteLine("촌장 : 증거로 몬스터의 수급 2개만 가져와주시게나.");
+                        Scene.Wait(1);
                         game.quest = true;
                     }
                     else if (choice == 2)
@@ -191,8 +194,43 @@ namespace endTrpg.Game
                         Console.WriteLine("촌장 : 그대의 여정에 축복이 있기를");
                         Scene.Wait(1);
                     }
-
                 }
+
+                else if (game.quest == true)
+                {
+                    Console.WriteLine("오 내가 부탁한 몬스터는 처리해주었는가?");
+                    Console.WriteLine("=============================================");
+                    Console.WriteLine("1. 네 처리했습니다.");
+                    Console.WriteLine("2. 아직 다 완료하지 못했습니다.");
+                    Console.Write("선택 : ");
+                    int.TryParse(Console.ReadLine(), out choice);
+                    if (choice == 1)
+                    {
+                        if(game.player.killCount >= 2)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("고맙네 보답으로 300골드를 드리겠네.");
+                            Console.WriteLine("그대의 여정에 축복이 있기를..");
+                            Scene.Wait(1);
+                            game.player.gold += 300;
+                        }
+
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("거짓말은 좋지 않네...");
+                            Console.WriteLine("나중에 다시 와주게나");
+                            Scene.Wait(1);
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("알겠네 천천히 처리하고 와주시게나.");
+                        Console.WriteLine("기다리고 있겠네.");
+                    }
+                }
+
                 game.playerPos = new Point() { x = 4, y = 3 };
             }
 

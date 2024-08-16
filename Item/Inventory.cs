@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using endTrpg.Game;
+using endTrpg.Monsters;
 
 namespace endTrpg.Item
 {
-    public class Inventory 
+    public class Inventory
     {
         public const int maxItems = 9;
         List<Item> items;
-
+        Monster monster;
 
         public Inventory()
         {
@@ -24,14 +25,14 @@ namespace endTrpg.Item
             {
                 switch (num)
                 {
-                    case 3:
-                        items.Add(new Potion());
-                        break;
                     case 1:
                         items.Add(new Weapon());
                         break;
                     case 2:
                         items.Add(new Armor());
+                        break;
+                    case 3:
+                        items.Add(new Potion());
                         break;
                     default:
                         break;
@@ -41,6 +42,20 @@ namespace endTrpg.Item
             {
                 Console.WriteLine("인벤토리가 전부 차있습니다.");
             }
+        }
+
+        public void Add(Monster monster)
+        {
+            if (items.Count < 9)
+            {
+                items.Add(new Loot(monster));
+            }
+            
+            else
+            {
+                Console.WriteLine("인벤토리가 전부 차있습니다.");
+            }
+            
         }
 
         public void showInventory()
@@ -105,5 +120,14 @@ namespace endTrpg.Item
             name = "음식";
         }
     }
+
+    public class Loot : Item
+    {
+        public Loot(Monster monster)
+        {
+            name = monster.loot;
+        }
+    }
+
 }
 
