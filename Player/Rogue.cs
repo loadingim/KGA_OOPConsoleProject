@@ -28,11 +28,6 @@ namespace endTrpg.Player
             this.Armor = "가벼운 천 옷";
             this.Expendables = "하급 회복 물약";
         }
-
-        public void Skill(MonsterBuilder monster)
-        {
-            monster.hp -= monster.hp - (attack * 2);
-        }
     }
 }
 

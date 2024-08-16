@@ -28,11 +28,6 @@ namespace endTrpg.Player
             this.Armor = "견습 마법사의 로브";
             this.Expendables = "하급 마력 회복 물약";
         }
-
-        public  void Skill(MonsterBuilder monster)
-        {
-            monster.hp -= monster.hp - (attack * 2);
-        }
     }
 }
 

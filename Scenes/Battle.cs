@@ -161,8 +161,13 @@ namespace endTrpg.Scenes
             {
                 if (choice == 1)
                 {
-                    Console.WriteLine($"{game.player.name}은 기본 공격을 하였다.");
+                    Console.WriteLine($"{game.player.name}은(는) 기본 공격을 하였다.");
+                    Console.WriteLine($"{mob.name}은(는) {game.player.attack}의 데미지를 입었다.");
                     mob.hp = mob.hp - game.player.attack;
+                    
+                    Console.WriteLine($"{mob.name}은(는) 반격을 하였다.");
+                    Console.WriteLine($"{game.player.name}은(는) {mob.attack}만큼의 데미지를 입었다.");
+                    game.player.curHP = game.player.curHP - mob.attack;
                     Wait(1);
                     Console.Clear();
                 }
@@ -180,6 +185,15 @@ namespace endTrpg.Scenes
                 Wait(1);
                 game.ReturnScenes();
                 game.playerPos = game.backPlayerPos;
+            }
+            if (game.player.curHP <= 0)
+            {
+                Console.WriteLine($"{game.player.name}이(가) 쓰러졌습니다.");
+                Console.WriteLine("눈 앞이 어두워졌습니다.");
+
+                Wait(2);
+
+                Environment.Exit(0);
             }
         }
     }
